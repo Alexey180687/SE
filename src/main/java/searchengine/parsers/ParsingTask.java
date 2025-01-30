@@ -19,7 +19,7 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class Index implements IndexParser {
+public class ParsingTask implements IndexParser {
     private final PageRepository pageRepository;
     private final LemmaRepository lemmaRepository;
     private final Morphology morphology;

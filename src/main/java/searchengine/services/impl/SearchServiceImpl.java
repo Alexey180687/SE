@@ -30,6 +30,11 @@ public class SearchServiceImpl implements SearchService {
     private final SiteRepository siteRepository;
 
     @Override
+    public Object executeSearch(String request, String site, int offset, int limit) {
+        return null;
+    }
+
+    @Override
     public List<StatisticsSearch> allSiteSearch(String searchText, int offset, int limit) {
         log.info("Getting results of the search \"" + searchText + "\"");
         List<SitePage> siteList = siteRepository.findAll();
