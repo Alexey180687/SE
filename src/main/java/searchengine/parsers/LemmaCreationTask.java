@@ -11,23 +11,16 @@ import searchengine.repository.PageRepository;
 import searchengine.utils.CleanHtmlCode;
 
 import java.util.*;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class LemmaCreationTask implements LemmaParser {
+public class LemmaCreationTask {
     private final PageRepository pageRepository;
     private final Morphology morphology;
-    private List<StatisticsLemma> statisticsLemmaList;
 
-    public List<StatisticsLemma> getLemmaDtoList() {
-        return statisticsLemmaList;
-    }
-
-    @Override
-    public void run(SitePage site) {
-        statisticsLemmaList = new CopyOnWriteArrayList<>();
+    public List<StatisticsLemma> parseLemmas(SitePage site) {
+        List<StatisticsLemma> statisticsLemmaList = new ArrayList<>();
         Iterable<Page> pageList = pageRepository.findAll();
         TreeMap<String, Integer> lemmaList = new TreeMap<>();
         for (Page page : pageList) {
@@ -48,7 +41,6 @@ public class LemmaCreationTask implements LemmaParser {
             Integer frequency = lemmaList.get(lemma);
             statisticsLemmaList.add(new StatisticsLemma(lemma, frequency));
         }
+        return statisticsLemmaList;
     }
-
-
 }
