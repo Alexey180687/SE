@@ -19,22 +19,25 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class ParsingTask implements IndexParser {
+public class IndexingTask implements IndexParser {
     private final PageRepository pageRepository;
     private final LemmaRepository lemmaRepository;
     private final Morphology morphology;
-    private List<StatisticsIndex> statisticsIndexList;
-
-    @Override
-    public List<StatisticsIndex> getIndexList() {
-        return statisticsIndexList;
-    }
 
     @Override
     public void run(SitePage site) {
+        calculateStatisticsIndex(site);
+    }
+
+    @Override
+    public List<StatisticsIndex> getIndexList() {
+        return null;
+    }
+
+    public List<StatisticsIndex> calculateStatisticsIndex(SitePage site) {
+        List<StatisticsIndex> statisticsIndexList = new ArrayList<>();
         Iterable<Page> pageList = pageRepository.findBySiteId(site);
         List<Lemma> lemmaList = lemmaRepository.findBySitePageId(site);
-        statisticsIndexList = new ArrayList<>();
 
         for (Page page : pageList) {
             if (page.getCode() < 400) {
@@ -67,7 +70,6 @@ public class ParsingTask implements IndexParser {
                 log.debug("Bad status code - " + page.getCode());
             }
         }
+        return statisticsIndexList;
     }
-
-
 }
