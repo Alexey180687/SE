@@ -7,7 +7,7 @@ import searchengine.dto.statistics.StatisticsSearch;
 import searchengine.model.IndexSearch;
 import searchengine.model.Lemma;
 import searchengine.model.Page;
-import searchengine.model.SitePage;
+import searchengine.model.Site;
 import searchengine.morphology.Morphology;
 import searchengine.repository.IndexSearchRepository;
 import searchengine.repository.LemmaRepository;
@@ -37,11 +37,11 @@ public class SearchServiceImpl implements SearchService {
     @Override
     public List<StatisticsSearch> allSiteSearch(String searchText, int offset, int limit) {
         log.info("Getting results of the search \"" + searchText + "\"");
-        List<SitePage> siteList = siteRepository.findAll();
+        List<Site> siteList = siteRepository.findAll();
         List<StatisticsSearch> result = new ArrayList<>();
         List<Lemma> foundLemmaList = new ArrayList<>();
         List<String> textLemmaList = getLemmaFromSearchText(searchText);
-        for (SitePage site : siteList) {
+        for (Site site : siteList) {
             foundLemmaList.addAll(getLemmaListFromSite(textLemmaList, site));
         }
         List<StatisticsSearch> searchData = null;
@@ -70,7 +70,7 @@ public class SearchServiceImpl implements SearchService {
     @Override
     public List<StatisticsSearch> siteSearch(String searchText, String url, int offset, int limit) {
         log.info("Searching for \"" + searchText + "\" in - " + url);
-        SitePage site = siteRepository.findByUrl(url);
+        Site site = siteRepository.findByUrl(url);
         List<String> textLemmaList = getLemmaFromSearchText(searchText);
         List<Lemma> foundLemmaList = getLemmaListFromSite(textLemmaList, site);
         log.info("Search done. Got results.");
@@ -87,7 +87,7 @@ public class SearchServiceImpl implements SearchService {
         return lemmaList;
     }
 
-    private List<Lemma> getLemmaListFromSite(List<String> lemmas, SitePage site) {
+    private List<Lemma> getLemmaListFromSite(List<String> lemmas, Site site) {
         lemmaRepository.flush();
         List<Lemma> lemmaList = lemmaRepository.findLemmaListBySite(lemmas, site);
         List<Lemma> result = new ArrayList<>(lemmaList);
@@ -101,7 +101,7 @@ public class SearchServiceImpl implements SearchService {
         for (Page page : pageList.keySet()) {
             String uri = page.getPath();
             String content = page.getContent();
-            SitePage pageSite = page.getSiteId();
+            Site pageSite = page.getSiteId();
             String site = pageSite.getUrl();
             String siteName = pageSite.getName();
             Float absRelevance = pageList.get(page);

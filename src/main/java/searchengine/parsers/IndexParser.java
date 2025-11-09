@@ -1,11 +1,11 @@
 package searchengine.parsers;
 
 import searchengine.dto.statistics.StatisticsIndex;
-import searchengine.model.SitePage;
+import searchengine.model.Site;
 
 import java.util.List;
 
 public interface IndexParser {
-    void run(SitePage site);
+    void run(Site site);
     List<StatisticsIndex> getIndexList();
 }

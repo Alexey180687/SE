@@ -15,7 +15,12 @@ import java.util.Objects;
 @Setter
 @Getter
 @Table(name = "site")
-public class SitePage {
+public class Site {
+    public enum Status {
+        INDEXING,
+        INDEXED,
+        FAILED
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -43,7 +48,7 @@ public class SitePage {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SitePage that = (SitePage) o;
+        Site that = (Site) o;
         return id == that.id && status == that.status &&
                 statusTime.equals(that.statusTime) &&
                 Objects.equals(lastError, that.lastError) &&
