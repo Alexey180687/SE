@@ -22,7 +22,7 @@ public class Page implements Serializable {
     private long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false, name = "site_id", referencedColumnName = "id")
-    private SitePage siteId;
+    private Site siteId;
     @Column(length = 1000, columnDefinition = "VARCHAR(515)", nullable = false)
     private String path;
 
@@ -34,7 +34,7 @@ public class Page implements Serializable {
     @OneToMany(mappedBy = "page", cascade = CascadeType.ALL)
     private List<IndexSearch> index = new ArrayList<>();
 
-    public Page(SitePage siteId, String path, int code, String content) {
+    public Page(Site siteId, String path, int code, String content) {
         this.siteId = siteId;
         this.path = path;
         this.code = code;

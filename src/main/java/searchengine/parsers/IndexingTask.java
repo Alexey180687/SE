@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import searchengine.dto.statistics.StatisticsIndex;
 import searchengine.model.Lemma;
 import searchengine.model.Page;
-import searchengine.model.SitePage;
+import searchengine.model.Site;
 import searchengine.morphology.Morphology;
 import searchengine.repository.LemmaRepository;
 import searchengine.repository.PageRepository;
@@ -25,7 +25,7 @@ public class IndexingTask implements IndexParser {
     private final Morphology morphology;
 
     @Override
-    public void run(SitePage site) {
+    public void run(Site site) {
         calculateStatisticsIndex(site);
     }
 
@@ -34,7 +34,7 @@ public class IndexingTask implements IndexParser {
         return null;
     }
 
-    public List<StatisticsIndex> calculateStatisticsIndex(SitePage site) {
+    public List<StatisticsIndex> calculateStatisticsIndex(Site site) {
         List<StatisticsIndex> statisticsIndexList = new ArrayList<>();
         Iterable<Page> pageList = pageRepository.findBySiteId(site);
         List<Lemma> lemmaList = lemmaRepository.findBySitePageId(site);

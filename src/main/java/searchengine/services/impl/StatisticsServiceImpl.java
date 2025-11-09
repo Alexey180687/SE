@@ -6,9 +6,7 @@ import searchengine.dto.statistics.DetailedStatisticsItem;
 import searchengine.dto.statistics.StatisticsData;
 import searchengine.dto.statistics.StatisticsResponse;
 import searchengine.dto.statistics.TotalStatistics;
-
-import searchengine.model.SitePage;
-import searchengine.model.Status;
+import searchengine.model.Site;
 import searchengine.repository.LemmaRepository;
 import searchengine.repository.PageRepository;
 import searchengine.repository.SiteRepository;
@@ -32,10 +30,10 @@ public class StatisticsServiceImpl implements StatisticsService {
         return new TotalStatistics(sites, pages, lemmas, true);
     }
 
-    private DetailedStatisticsItem getDetailed(SitePage site) {
+    private DetailedStatisticsItem getDetailed(Site site) {
         String url = site.getUrl();
         String name = site.getName();
-        Status status = site.getStatus();
+        Site.Status status = site.getStatus();
         Date statusTime = site.getStatusTime();
         String error = site.getLastError();
         long pages = pageRepository.countBySiteId(site);
@@ -44,9 +42,9 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     private List<DetailedStatisticsItem> getDetailedList() {
-        List<SitePage> siteList = siteRepository.findAll();
+        List<Site> siteList = siteRepository.findAll();
         List<DetailedStatisticsItem> result = new ArrayList<>();
-        for (SitePage site : siteList) {
+        for (Site site : siteList) {
             DetailedStatisticsItem item = getDetailed(site);
             result.add(item);
         }

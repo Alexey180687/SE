@@ -1,11 +1,11 @@
 package searchengine.parsers;
 
 import searchengine.dto.statistics.StatisticsLemma;
-import searchengine.model.SitePage;
+import searchengine.model.Site;
 
 import java.util.List;
 
 public interface LemmaParser {
-    void run(SitePage site);
+    void run(Site site);
     List<StatisticsLemma> getLemmaDtoList();
 }

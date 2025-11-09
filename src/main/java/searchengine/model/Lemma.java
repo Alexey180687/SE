@@ -22,7 +22,7 @@ public class Lemma implements Serializable {
     private long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "site_id", referencedColumnName = "id")
-    private SitePage sitePageId;
+    private Site sitePageId;
     private String lemma;
     private int frequency;
 
@@ -30,7 +30,7 @@ public class Lemma implements Serializable {
     private List<IndexSearch> index = new ArrayList<>();
 
 
-    public Lemma(String lemma, int frequency, SitePage sitePageId) {
+    public Lemma(String lemma, int frequency, Site sitePageId) {
         this.lemma = lemma;
         this.frequency = frequency;
         this.sitePageId = sitePageId;

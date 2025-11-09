@@ -1,7 +1,7 @@
 package searchengine.dto.statistics;
 
 import lombok.Value;
-import searchengine.model.Status;
+import searchengine.model.Site;
 
 import java.util.Date;
 
@@ -9,7 +9,7 @@ import java.util.Date;
 public class DetailedStatisticsItem {
     String url;
     String name;
-    Status status;
+    Site.Status status;
     Date statusTime;
     String error;
     long pages;
